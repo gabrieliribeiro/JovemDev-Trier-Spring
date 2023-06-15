@@ -18,38 +18,25 @@ import lombok.Setter;
 @RequestMapping(value = "/jogatina")
 public class DadoResource {
 	
-	private Integer qtd;
-	private Float aposta;
+	int soma = 0;
 	
-	@GetMapping("/quantidade-dados/{qtd}")
-	public String dadoQtd(@PathVariable (name = "qtd")Integer qtd) {
-		if(qtd >= 1 && qtd <= 4) {
-			this.qtd = qtd;
-			return("Quantidade de dados escolhida com sucesso!!"
-					+ "\nDado quantidade de dados: " + qtd);
-		}else {
-			return("Quantidade inválida! Informe novamente.");
-		}
-	}
-	
-	@GetMapping("/valor-aposta/{valor}")
-	public String valor(@PathVariable (name = "valor")Float valor) {
-		if(valor > 0 ) {
-			this.aposta = valor;
-			return("Valor enviado com sucesso!!"
+	@GetMapping("/aposta/{qtd}/{valor}")
+	public String dadoQtd(@PathVariable (name = "qtd")Integer qtd, @PathVariable (name = "valor")Integer valor) {
+		//refatorar estrutura do código, fazer métodos para validação, e para sorteio e percentual(gpt)
+		//e tentar fazer retorno JSON
+		if(qtd >= 1 && qtd <= 4 && valor > 0) {
+			System.out.println("Aposta feita com sucesso!!"
+					+ "\nDado quantidade de dados: " + qtd
 					+ "\nO valor da sua aposta é de: " + valor);
+			for (int i = 1; i < qtd; i++) {
+		        int numAleatorio = (int)(Math.random() * 6 ) + 1;
+		        return ("Número sorteado: " + numAleatorio);
+			}
+			return("O valor: " + valor);
+
 		}else {
-			return("Valor inválida");
+			return("Quantidade ou valor inválido! Informe novamente.");
 		}
-	}
-	
-	@GetMapping("/resultado")
-	public String somar() {
-		for (int i = 0; i < getQtd(); i++) {
-	        int numAleatorio = (int)(Math.random() * 6 ) + 1;
-	        return ("Número sorteado: " + numAleatorio);
-		}
-		return ("Número:");
 	}
 	
 }
