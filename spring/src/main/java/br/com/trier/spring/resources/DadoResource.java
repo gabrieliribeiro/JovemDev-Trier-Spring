@@ -10,8 +10,10 @@ import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @RestController
 @RequestMapping(value = "/jogatina")
 public class DadoResource {
@@ -42,11 +44,12 @@ public class DadoResource {
 	}
 	
 	@GetMapping("/resultado")
-	public Integer somar() {
+	public String somar() {
 		for (int i = 0; i < getQtd(); i++) {
 	        int numAleatorio = (int)(Math.random() * 6 ) + 1;
-	        System.out.println("Número sorteado: " + numAleatorio);
-	        return null;
+	        return ("Número sorteado: " + numAleatorio);
+		}
+		return ("Número:");
 	}
 	
 }
