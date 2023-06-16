@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import br.com.trier.spring.domain.Pais;
 import br.com.trier.spring.repositories.PaisRepository;
 import br.com.trier.spring.services.PaisService;
-import lombok.Setter;
 
 @Service
 public class PaisServiceImpl implements PaisService{
@@ -46,5 +45,11 @@ public class PaisServiceImpl implements PaisService{
 		}
 		
 	}
+
+	@Override
+	public List<Pais> findByName(String name) {
+		return repository.findByName(name);
+	}
+	
 
 }

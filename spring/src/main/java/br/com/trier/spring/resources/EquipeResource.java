@@ -25,8 +25,8 @@ public class EquipeResource {
 	
 	@PostMapping
 	public ResponseEntity<Equipe> insert(@RequestBody Equipe equipe){
-		Equipe newPais = service.salvar(equipe);
-		return newPais!=null ? ResponseEntity.ok(newPais) : ResponseEntity.badRequest().build();
+		Equipe newEquipe = service.salvar(equipe);
+		return newEquipe!=null ? ResponseEntity.ok(newEquipe) : ResponseEntity.badRequest().build();
 	}
 	
 	@GetMapping("/{id}")

@@ -54,4 +54,10 @@ public class UserResource {
 		services.delete(id);
 		return ResponseEntity.ok().build();
 	}
+	
+	@GetMapping("/name/{name}")
+	public ResponseEntity<List<User>> achaPorNome(@PathVariable String name){
+		List<User> lista = services.findByName(name);
+		return lista.size()>0 ? ResponseEntity.ok(lista):ResponseEntity.noContent().build();
+	}
 }
