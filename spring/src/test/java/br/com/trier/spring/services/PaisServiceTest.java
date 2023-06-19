@@ -1,10 +1,8 @@
 package br.com.trier.spring.services;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import java.util.List;
 
+import br.com.trier.spring.services.exceptions.ObjetoNaoEncontrado;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,8 @@ import org.springframework.test.context.jdbc.Sql;
 import br.com.trier.spring.BaseTests;
 import br.com.trier.spring.domain.Pais;
 import jakarta.transaction.Transactional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 public class PaisServiceTest extends BaseTests{
@@ -42,6 +42,27 @@ public class PaisServiceTest extends BaseTests{
 	@DisplayName("Teste busca por ID inválido")
 	@Sql({"classpath:/resources/sqls/pais.sql"})
 	void findByNonExistenteId() {
-		
+		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> paisService().findById(7));
+		assertEquals("País 7 não encontrado", exception.getMessage());
+	}
+
+	@Test
+	@DisplayName("Teste de incluir um país")
+	void insertCountryTest(){
+		var pais = new Pais(null, "Suíça");
+		paisService().salvar(pais);
+		pais = paisService().findById(1);
+		assertNotEquals(pais, null);
+		assertEquals(1, pais.getId());
+		assertEquals("Suíça", pais.getName());
+	}
+
+	@Test
+	@DisplayName("Teste de alterar um país inexistente")
+	@Sql({"classpath:/resources/sqls/pais.sql"})
+	void updateNonexistenteCountry(){
+		var pais = new Pais(8, "Chile");
+		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> paisService().findById(8));
+		assertEquals("País 8 não encontrado", exception.getMessage());
 	}
 }

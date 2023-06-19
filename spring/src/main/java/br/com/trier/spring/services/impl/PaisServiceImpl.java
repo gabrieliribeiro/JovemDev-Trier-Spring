@@ -3,6 +3,8 @@ package br.com.trier.spring.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.trier.spring.domain.User;
+import br.com.trier.spring.services.exceptions.ViolacaoIntegridade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,13 @@ public class PaisServiceImpl implements PaisService{
 	
 	@Autowired
 	PaisRepository repository;
+
+//	private void checkDuplicateName(User obj){
+//		Pais pais = repository.findByName(obj.getName());
+//		if (pais != null && pais.getId() != obj.getId()){
+//			throw new ViolacaoIntegridade("País já cadastrado!");
+//		}
+//	}
 
 	@Override
 	public Pais salvar(Pais pais) {
@@ -47,8 +56,8 @@ public class PaisServiceImpl implements PaisService{
 		
 	}
 
-	@Override
 	public List<Pais> findByName(String name) {
+		//checkDuplicateName(name);
 		return repository.findByName(name);
 	}
 	
