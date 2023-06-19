@@ -52,4 +52,28 @@ public class CampeonatoResource {
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
+	
+	@GetMapping("/{ano}")
+	public ResponseEntity<List<Campeonato>>findByYear(@PathVariable Integer ano) {
+		service.findByAno(ano);
+		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/ano-entre/{anoInicial}/{anoFinal}")
+	public ResponseEntity<List<Campeonato>> findByYearBetween(@PathVariable Integer anoInicial, Integer anoFinal) {
+		service.findByAnoBetween(anoInicial, anoFinal);
+		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/{descricao}")
+	public ResponseEntity<List<Campeonato>> findByDescriptionContainsIgnoreCase(@PathVariable String descricao) {
+		service.findByDescricaoContainsIgnoreCase(descricao);
+		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/acha-desc-ano/{descricao}/{ano}")
+	public ResponseEntity<List<Campeonato>> findByDescriptionContainsIgnoreCaseAndYearEquals(@PathVariable String descricao, Integer ano) {
+		service.findByDescricaoContainsIgnoreCaseAndAnoEquals(descricao, ano);
+		return ResponseEntity.ok().build();
+	}
 }

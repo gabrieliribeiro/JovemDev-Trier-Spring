@@ -2,6 +2,7 @@ package br.com.trier.spring.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ import org.springframework.test.context.jdbc.Sql;
 
 import br.com.trier.spring.BaseTests;
 import br.com.trier.spring.domain.User;
+import br.com.trier.spring.services.exceptions.ObjetoNaoEncontrado;
+import br.com.trier.spring.services.exceptions.ViolacaoIntegridade;
 import jakarta.transaction.Transactional;
 
 @Transactional
@@ -36,8 +39,8 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste busca por ID inválido")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void findNotValidIdTest() {
-		var user = userService.findById(3);
-		assertNotEquals(user, null);
+		var exception = assertThrows(ObjetoNaoEncontrado.class,	() -> userService.findById(10));
+		assertEquals("Usuário 10 não encontrado", exception.getMessage());
 	}
 	
 	@Test
@@ -96,4 +99,23 @@ public class UserServiceTest extends BaseTests{
 		lista = userService.findByName("Usuario teste 2");
 		assertEquals(1, lista.size());
 	}
+	
+	@Test
+	@DisplayName("Cadastro com email repetido")
+	@Sql({"classpath:/resources/sqls/usuario.sql"})
+	void insertNewUserWithDuplicateEmailTest() {
+		var user = new User(null, "Gabrieli", "teste1@teste.com", "1234");
+		var exception = assertThrows(ViolacaoIntegridade.class, ()-> userService.salvar(user));
+		assertEquals("E-mail já cadastrado: teste1@teste.com", exception.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Alterar usuário inexistente")
+	@Sql({"classpath:/resources/sqls/usuario.sql"})
+	void updateNonexistentUser() {
+		var user = new User(5, "Gabrieli", "teste5@teste.com", "1234");
+		var exception = assertThrows(ObjetoNaoEncontrado.class,	() -> userService.findById(5));
+		assertEquals("Usuário 5 não encontrado", exception.getMessage());
+	}
+	
 }
