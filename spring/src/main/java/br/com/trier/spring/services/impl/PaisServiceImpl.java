@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.trier.spring.domain.Pais;
 import br.com.trier.spring.repositories.PaisRepository;
 import br.com.trier.spring.services.PaisService;
+import br.com.trier.spring.services.exceptions.ObjetoNaoEncontrado;
 
 @Service
 public class PaisServiceImpl implements PaisService{
@@ -29,7 +30,7 @@ public class PaisServiceImpl implements PaisService{
 	@Override
 	public Pais findById(Integer id) {
 		Optional<Pais> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjetoNaoEncontrado("País %s não encontrado".formatted(id)));
 	}
 
 	@Override

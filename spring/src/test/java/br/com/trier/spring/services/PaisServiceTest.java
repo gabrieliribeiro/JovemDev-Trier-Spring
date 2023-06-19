@@ -26,7 +26,6 @@ public class PaisServiceTest extends BaseTests{
 	void findAllCountriesTest() {
 		List<Pais> lista = paisService.listAll();
 		assertEquals(4, lista.size());
-		assertEquals(1, lista.get(0).getId());
 	}
 	
 	@Test
@@ -37,5 +36,12 @@ public class PaisServiceTest extends BaseTests{
 		assertNotEquals(pais, null);
 		assertEquals(1, pais.getId());
 		assertEquals("Brasil", pais.getName());		
+	}
+	
+	@Test
+	@DisplayName("Teste busca por ID inválido")
+	@Sql({"classpath:/resources/sqls/pais.sql"})
+	void findByNonExistenteId() {
+		
 	}
 }

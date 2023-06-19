@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.trier.spring.domain.Equipe;
 import br.com.trier.spring.repositories.EquipeRepository;
 import br.com.trier.spring.services.EquipeService;
+import br.com.trier.spring.services.exceptions.ObjetoNaoEncontrado;
 
 @Service
 public class EquipeServiceImpl implements EquipeService {
@@ -29,7 +30,8 @@ public class EquipeServiceImpl implements EquipeService {
 	@Override
 	public Equipe findById(Integer id) {
 		Optional<Equipe> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjetoNaoEncontrado("Equipe %s não encontrada".formatted(id)));
+		
 	}
 
 	@Override

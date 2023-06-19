@@ -28,10 +28,10 @@ public class CampeonatoResource {
 		return newCampeonato!=null ? ResponseEntity.ok(newCampeonato) : ResponseEntity.badRequest().build();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/codigo/{id}")
 	public ResponseEntity<Campeonato> buscarPorCodigo(@PathVariable Integer id){
 		Campeonato campeonato = service.findById(id);
-		return campeonato!=null ? ResponseEntity.ok(campeonato) : ResponseEntity.badRequest().build();
+		return campeonato != null ? ResponseEntity.ok(campeonato) : ResponseEntity.badRequest().build();
 	}
 	
 	@GetMapping
@@ -53,7 +53,7 @@ public class CampeonatoResource {
 		return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping("/{ano}")
+	@GetMapping("ano/{ano}")
 	public ResponseEntity<List<Campeonato>>findByYear(@PathVariable Integer ano) {
 		service.findByAno(ano);
 		return ResponseEntity.ok().build();
@@ -65,7 +65,7 @@ public class CampeonatoResource {
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping("/{descricao}")
+	@GetMapping("/descricao/{descricao}")
 	public ResponseEntity<List<Campeonato>> findByDescriptionContainsIgnoreCase(@PathVariable String descricao) {
 		service.findByDescricaoContainsIgnoreCase(descricao);
 		return ResponseEntity.ok().build();
