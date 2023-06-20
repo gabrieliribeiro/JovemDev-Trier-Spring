@@ -19,15 +19,16 @@ public class PaisServiceImpl implements PaisService{
 	@Autowired
 	PaisRepository repository;
 
-//	private void checkDuplicateName(User obj){
-//		Pais pais = repository.findByName(obj.getName());
-//		if (pais != null && pais.getId() != obj.getId()){
-//			throw new ViolacaoIntegridade("País já cadastrado!");
-//		}
-//	}
+	private void findByName(Pais obj){
+		Pais pais = repository.findByName(obj.getName());
+		if (pais != null && pais.getId() != obj.getId()){
+			throw new ViolacaoIntegridade("País %s já cadastrado!".formatted(obj.getName()));
+		}
+	}
 
 	@Override
 	public Pais salvar(Pais pais) {
+		findByName(pais);
 		return repository.save(pais);
 	}
 
@@ -44,6 +45,7 @@ public class PaisServiceImpl implements PaisService{
 
 	@Override
 	public Pais update(Pais pais) {
+		findByName(pais);
 		return repository.save(pais);
 	}
 
@@ -56,10 +58,9 @@ public class PaisServiceImpl implements PaisService{
 		
 	}
 
-	public List<Pais> findByName(String name) {
-		//checkDuplicateName(name);
-		return repository.findByName(name);
+	@Override
+	public List<Pais> findByNameStartingWithIgnoreCase(String name) {
+		return repository.findByNameStartingWithIgnoreCase(name);
 	}
-	
 
 }

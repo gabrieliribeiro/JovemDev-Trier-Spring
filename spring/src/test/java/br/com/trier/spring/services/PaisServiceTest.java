@@ -41,9 +41,9 @@ public class PaisServiceTest extends BaseTests{
 	@Test
 	@DisplayName("Teste busca por ID inválido")
 	@Sql({"classpath:/resources/sqls/pais.sql"})
-	void findByNonExistenteId() {
-		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> paisService().findById(7));
-		assertEquals("País 7 não encontrado", exception.getMessage());
+	void findNotValidIDTest() {
+		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> paisService().findById(8));
+		assertEquals("País 8 não encontrado", exception.getMessage());
 	}
 
 	@Test
