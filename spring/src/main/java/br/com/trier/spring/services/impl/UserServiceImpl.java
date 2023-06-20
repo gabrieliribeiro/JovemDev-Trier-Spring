@@ -40,8 +40,6 @@ public class UserServiceImpl implements UserService{
 	public User findById(Integer id) {
 		Optional<User> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjetoNaoEncontrado("Usuário %s não encontrado".formatted(id)));
-		
-		//return repositoy.findById(id).orElse(null);
 	}
 
 	@Override

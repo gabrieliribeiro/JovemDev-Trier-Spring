@@ -42,7 +42,7 @@ public class PaisServiceTest extends BaseTests{
 	@DisplayName("Teste busca por ID inválido")
 	@Sql({"classpath:/resources/sqls/pais.sql"})
 	void findNotValidIDTest() {
-		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> paisService().findById(8));
+		var exception = assertThrows(ObjetoNaoEncontrado.class, ()-> paisService.findById(8));
 		assertEquals("País 8 não encontrado", exception.getMessage());
 	}
 
@@ -50,7 +50,7 @@ public class PaisServiceTest extends BaseTests{
 	@DisplayName("Teste de incluir um país")
 	void insertCountryTest(){
 		var pais = new Pais(null, "Suíça");
-		paisService().salvar(pais);
+		paisService.salvar(pais);
 		pais = paisService().findById(1);
 		assertNotEquals(pais, null);
 		assertEquals(1, pais.getId());

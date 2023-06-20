@@ -3,7 +3,6 @@ package br.com.trier.spring.services.impl;
 import java.util.List;
 import java.util.Optional;
 
-import br.com.trier.spring.domain.User;
 import br.com.trier.spring.services.exceptions.ViolacaoIntegridade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,9 +51,7 @@ public class PaisServiceImpl implements PaisService{
 	@Override
 	public void delete(Integer id) {
 		Pais pais = findById(id);
-		if (pais != null) {
-			repository.delete(pais);
-		}
+		repository.delete(pais);
 		
 	}
 
