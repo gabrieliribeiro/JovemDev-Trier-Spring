@@ -1,6 +1,6 @@
 package br.com.trier.spring.resources.exceptions;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +16,13 @@ public class ResourceExceptionHandler {
 	
 	@ExceptionHandler(ObjetoNaoEncontrado.class)
 	public ResponseEntity<StandardError> objetoNaoEncontrado(ObjetoNaoEncontrado ex, HttpServletRequest request){
-		StandardError erro = new StandardError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), ex.getMessage(), request.getRequestURI());
+		StandardError erro = new StandardError(ZonedDateTime.now(), HttpStatus.NOT_FOUND.value(), ex.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 	}
 	
 	@ExceptionHandler(ViolacaoIntegridade.class)
 	public ResponseEntity<StandardError> violacaoIntegridade(ViolacaoIntegridade ex, HttpServletRequest request){
-		StandardError erro = new StandardError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), ex.getMessage(), request.getRequestURI());
+		StandardError erro = new StandardError(ZonedDateTime.now(), HttpStatus.BAD_REQUEST.value(), ex.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
 	}
 }
