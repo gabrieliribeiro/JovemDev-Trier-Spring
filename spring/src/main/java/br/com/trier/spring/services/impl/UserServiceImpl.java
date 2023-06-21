@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.trier.spring.domain.User;
-import br.com.trier.spring.repositories.UserRepositoy;
+import br.com.trier.spring.repositories.UserRepository;
 import br.com.trier.spring.services.UserService;
 import br.com.trier.spring.services.exceptions.ObjetoNaoEncontrado;
 import br.com.trier.spring.services.exceptions.ViolacaoIntegridade;
@@ -16,7 +16,7 @@ import br.com.trier.spring.services.exceptions.ViolacaoIntegridade;
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
-	UserRepositoy repository;
+    UserRepository repository;
 	
 	private void findByEmail(User obj) {
 		User user = repository.findByEmail(obj.getEmail());
@@ -55,8 +55,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<User> findByName(String name) {
-		return repository.findByName(name);
+	public List<User> findByNameStartingWithIgnoreCase(String name) {
+		return repository.findByNameStartingWithIgnoreCase(name);
 	}
 	
 }

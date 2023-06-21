@@ -23,8 +23,7 @@ public class UserResource {
 	
 	@Autowired
 	private UserService services;
-	
-	
+
 	@PostMapping
 	public ResponseEntity<UserDTO> insert(@RequestBody UserDTO user){
 		User newUser = services.salvar(new User(user));
@@ -45,11 +44,12 @@ public class UserResource {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO userDTO){
+	public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO userDTO) {
 		User user = new User(userDTO);
 		user.setId(id);
 		user = services.update(user);
-		return user!=null ? ResponseEntity.ok(user.toDto()) : ResponseEntity.badRequest().build();
+
+		return user != null ? ResponseEntity.ok(user.toDto()) : ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("/{id}")
@@ -60,7 +60,7 @@ public class UserResource {
 	
 	@GetMapping("/name/{name}")
 	public ResponseEntity<List<UserDTO>> achaPorNome(@PathVariable String name){
-		return ResponseEntity.ok(services.findByName(name).stream()
+		return ResponseEntity.ok(services.findByNameStartingWithIgnoreCase(name).stream()
 				.map((user) -> user.toDto())
 				.toList());
 	}

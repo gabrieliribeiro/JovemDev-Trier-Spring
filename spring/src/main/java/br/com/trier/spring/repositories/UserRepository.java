@@ -8,12 +8,7 @@ import org.springframework.stereotype.Repository;
 import br.com.trier.spring.domain.User;
 
 @Repository
-public interface UserRepositoy extends JpaRepository<User, Integer>{
-	
-	//FIXME arrumar para procurar com inicial
-	List<User> findByName(String name);
-
-	//List<User> findByNameStartingWithIgnoreCase(String name);
-	
+public interface UserRepository extends JpaRepository<User, Integer>{
+	List<User> findByNameStartingWithIgnoreCase(String name);
 	User findByEmail (String email);
 }

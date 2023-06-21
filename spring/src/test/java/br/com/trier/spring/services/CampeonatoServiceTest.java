@@ -22,7 +22,7 @@ public class CampeonatoServiceTest extends BaseTests{
 	
 	@Test
 	@DisplayName("Teste lista todos campeonatos")
-	@Sql({"classpath:/resources/sqls/campeonato.sql"})
+	@Sql({"classpath:/campeonato.sql"})
 	void listAllChampionshipTest() {
 		List<Campeonato> lista = campeonatoService.listAll();
 		assertEquals(4, lista.size());
@@ -31,7 +31,7 @@ public class CampeonatoServiceTest extends BaseTests{
 	
 	@Test
 	@DisplayName("Teste encontra campeonato por ID")
-	@Sql({"classpath:/resources/sqls/campeonato.sql"})
+	@Sql({"classpath:/campeonato.sql"})
 	void findChampionshipByIdTest(){
 		var campeonato = campeonatoService.findById(1);
 		assertNotEquals(campeonato, null);

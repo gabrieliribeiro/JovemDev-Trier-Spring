@@ -8,21 +8,4 @@
       </scope>
     </mapping>
   </component>
-  <component name="SqlDataSourceStorage">
-    <option name="dataSources">
-      <list>
-        <State>
-          <option name="id" value="381712de-330d-4065-81fa-3f91c20dcbd3" />
-          <option name="name" value="DDL data source" />
-          <option name="dbmsName" value="H2" />
-          <option name="urls">
-            <array>
-              <option value="file://$PROJECT_DIR$/spring/src/test/java/resources/sqls/usuario.sql" />
-            </array>
-          </option>
-          <option name="outLayout" value="File per object by schema.groovy" />
-        </State>
-      </list>
-    </option>
-  </component>
 </project>
