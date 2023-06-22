@@ -6,12 +6,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 
 import br.com.trier.spring.services.CampeonatoService;
+import br.com.trier.spring.services.CorridaService;
 import br.com.trier.spring.services.EquipeService;
 import br.com.trier.spring.services.PaisService;
+import br.com.trier.spring.services.PilotoService;
+import br.com.trier.spring.services.PistaService;
 import br.com.trier.spring.services.UserService;
 import br.com.trier.spring.services.impl.CampeonatoServiceImpl;
+import br.com.trier.spring.services.impl.CorridaServiceImpl;
 import br.com.trier.spring.services.impl.EquipeServiceImpl;
 import br.com.trier.spring.services.impl.PaisServiceImpl;
+import br.com.trier.spring.services.impl.PilotoServiceImpl;
+import br.com.trier.spring.services.impl.PistaServiceImpl;
 import br.com.trier.spring.services.impl.UserServiceImpl;
 
 @TestConfiguration
@@ -37,5 +43,20 @@ public class BaseTests {
 	@Bean
 	public EquipeService equipeService() {
 		return new EquipeServiceImpl();
+	}
+	
+	@Bean
+	public PistaService pistaService() {
+		return new PistaServiceImpl();
+	}
+	
+	@Bean
+	public CorridaService corridaService() {
+		return new CorridaServiceImpl();
+	}
+	
+	@Bean
+	public PilotoService pilotoService() {
+		return new PilotoServiceImpl();
 	}
 }

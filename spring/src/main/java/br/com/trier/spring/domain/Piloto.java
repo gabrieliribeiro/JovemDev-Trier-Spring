@@ -1,5 +1,6 @@
 package br.com.trier.spring.domain;
 
+import br.com.trier.spring.domain.dto.PilotoDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,4 +34,12 @@ public class Piloto {
 	
 	@ManyToOne
 	private Equipe equipe;
+	
+	public Piloto(PilotoDTO dto) {
+		this(dto.getId(), dto.getNome(), dto.getPais(), dto.getEquipe());
+	}
+	
+	public PilotoDTO toDto() {
+		return new PilotoDTO(this.id, this.nome, this.getPais(), this.equipe);
+	}
 }

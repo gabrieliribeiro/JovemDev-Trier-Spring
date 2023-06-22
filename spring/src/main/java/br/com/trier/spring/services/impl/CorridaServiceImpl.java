@@ -78,7 +78,7 @@ public class CorridaServiceImpl implements CorridaService{
 	public List<Corrida> findByCampeonato(Campeonato campeonato) {
 		List<Corrida> lista = repository.findByCampeonato(campeonato);
 		if (lista.size() == 0) {
-			throw new ObjetoNaoEncontrado("Nenhuma pista encontrada no país %s".formatted(campeonato));
+			throw new ObjetoNaoEncontrado("Nenhum campeonato encontrado na corrida %s".formatted(campeonato));
 		}
 		return lista;
 	}

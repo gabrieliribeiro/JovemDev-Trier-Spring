@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.trier.spring.domain.Campeonato;
 import br.com.trier.spring.domain.Corrida;
-import br.com.trier.spring.services.CampeonatoService;
+import br.com.trier.spring.domain.Pista;
+import br.com.trier.spring.domain.dto.CorridaDTO;
 import br.com.trier.spring.services.CorridaService;
-import br.com.trier.spring.services.PistaService;
+
 
 @RestController
 @RequestMapping(value = "corrida")
@@ -25,41 +27,46 @@ public class CorridaResource {
 	@Autowired
 	private CorridaService service;
 	
-	@Autowired
-	private PistaService pistaService;
-	
-	@Autowired
-	private CampeonatoService campeonatoService;
 	
 	@PostMapping
-	public ResponseEntity<Corrida> insert(@RequestBody Corrida corrida){
-		return ResponseEntity.ok(service.salvar(corrida));
+	public ResponseEntity<CorridaDTO> insert(@RequestBody CorridaDTO corrida){
+		Corrida novaCorrida = service.salvar(new Corrida(corrida));
+		return novaCorrida!=null ? ResponseEntity.ok(novaCorrida.toDto()) : ResponseEntity.badRequest().build();
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Corrida> buscaPorCodigo(@PathVariable Integer id) {
-		return ResponseEntity.ok(service.findById(id));
+	public ResponseEntity<CorridaDTO> buscaPorCodigo(@PathVariable Integer id) {
+		Corrida corrida = service.findById(id);
+		return ResponseEntity.ok(corrida.toDto());
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Corrida>> listarTodos(){
-		return ResponseEntity.ok(service.listAll());
+	public ResponseEntity<List<CorridaDTO>> listarTodos(){
+		return ResponseEntity.ok(service.listAll().stream()
+				.map((corrida) -> corrida.toDto())
+				.toList());
 	}
 	
-	@GetMapping("/pais/{idPista}")
-	public ResponseEntity<List<Corrida>> buscaPorPista(@PathVariable Integer idPista){
-		return ResponseEntity.ok(service.findByPista(pistaService.findById(idPista)));
+	@GetMapping("/pista/{idPista}")
+	public ResponseEntity<List<CorridaDTO>> buscaPorPista(@PathVariable Pista idPista){
+		return ResponseEntity.ok(service.findByPista(idPista).stream()
+				.map((corrida) -> corrida.toDto())
+				.toList());
 	}
 	
-	@GetMapping("/pais/{idCampeonato}")
-	public ResponseEntity<List<Corrida>> buscarPorEquipe(@PathVariable Integer idCampeonato){
-		return ResponseEntity.ok(service.findByCampeonato(campeonatoService.findById(idCampeonato)));
+	@GetMapping("/campeonato/{campeonato}")
+	public ResponseEntity<List<CorridaDTO>> buscarPorEquipe(@PathVariable Campeonato campeonato){
+		return ResponseEntity.ok(service.findByCampeonato(campeonato).stream()
+				.map((corrida) -> corrida.toDto())
+				.toList());
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Corrida> update(@PathVariable Integer id, @RequestBody Corrida piloto) {
-		piloto.setId(id);
-		return ResponseEntity.ok(piloto = service.update(piloto));
+	public ResponseEntity<CorridaDTO> update(@PathVariable Integer id, @RequestBody CorridaDTO corridaDTO) {
+		Corrida corrida = new Corrida(corridaDTO);
+		corrida.setId(id);
+		corrida = service.update(corrida);
+		return corrida != null ? ResponseEntity.ok(corrida.toDto()) : ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("/{id}")
