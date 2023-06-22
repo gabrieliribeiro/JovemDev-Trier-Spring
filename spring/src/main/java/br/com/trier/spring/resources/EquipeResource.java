@@ -53,4 +53,14 @@ public class EquipeResource {
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
+
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity<Equipe> findByName(@PathVariable String nome){
+		return ResponseEntity.ok(service.findByName(nome));
+	}
+
+	@GetMapping("/like/{nome}")
+	public ResponseEntity<List<Equipe>> findByNameContainsIgnoreCase(@PathVariable String nome){
+		return ResponseEntity.ok(service.findByNameContainsIgnoreCase(nome));
+	}
 }
