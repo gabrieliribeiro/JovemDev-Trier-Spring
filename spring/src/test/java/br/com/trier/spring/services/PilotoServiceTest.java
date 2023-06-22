@@ -21,9 +21,9 @@ public class PilotoServiceTest extends BaseTests{
 	
 	@Test
 	@DisplayName("Teste busca por ID")
-	@Sql(scripts = "classpath:sql/piloto.sql")
 	@Sql(scripts = "classpath:sql/equipe.sql")
 	@Sql(scripts = "classpath:sql/pais.sql")
+	@Sql(scripts = "classpath:sql/piloto.sql")
 	void findByIdTest() {
 		var piloto = pilotoService.findById(1);
 		assertNotEquals(piloto, null);
@@ -32,11 +32,11 @@ public class PilotoServiceTest extends BaseTests{
 	
 	@Test
 	@DisplayName("Teste busca por ID inválido")
-	@Sql(scripts = "classpath:sql/piloto.sql")
 	@Sql(scripts = "classpath:sql/equipe.sql")
 	@Sql(scripts = "classpath:sql/pais.sql")
+	@Sql(scripts = "classpath:sql/piloto.sql")
 	void findNotValidIdTest() {
 		var exception = assertThrows(ObjetoNaoEncontrado.class,	() -> pilotoService.findById(10));
-		assertEquals("Piloto 10 não encontrado", exception.getMessage());
+		assertEquals("Piloto com id 10 não existe", exception.getMessage());
 	}
 }

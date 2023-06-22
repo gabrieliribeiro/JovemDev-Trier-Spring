@@ -40,6 +40,7 @@ public class Corrida {
 	@NotNull
 	private Campeonato campeonato;
 	
+	//Modificar DTO e criar Utils
 	public Corrida(CorridaDTO dto) {
 		this(dto.getId(), dto.getData(),dto.getPista(), dto.getCampeonato());
 	}
