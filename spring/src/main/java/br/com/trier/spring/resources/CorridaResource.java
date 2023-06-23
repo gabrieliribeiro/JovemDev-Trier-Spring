@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.trier.spring.domain.Campeonato;
@@ -54,22 +55,22 @@ public class CorridaResource {
 	@GetMapping
 	public ResponseEntity<List<CorridaDTO>> listarTodos(){
 		return ResponseEntity.ok(service.listAll().stream()
-				.map((corrida) -> corrida.toDTO())
+				.map(Corrida :: toDTO)
 				.toList()
 		);
 	}
 
-	@GetMapping("/data/{date}")
-	public ResponseEntity<List<CorridaDTO>> findByDate(@PathVariable String date){
+	@GetMapping("/{date}")
+	public ResponseEntity<List<CorridaDTO>> findByDate(@RequestParam String date){
 		return ResponseEntity.ok(service.findByData(
 				DateUtils.strToZonedDateTime(date)).stream()
-				.map((corrida) -> corrida.toDTO())
+				.map(Corrida :: toDTO)
 				.toList()
 		);
 	}
 
-	@GetMapping("/data/{dataInicial}/{dataFinal}")
-	public ResponseEntity<List<CorridaDTO>> findByDateBetween(@PathVariable String dataInicial, @PathVariable String dataFinal){
+	@GetMapping("{dataInicial}/{dataFinal}")
+	public ResponseEntity<List<CorridaDTO>> findByDateBetween(@RequestParam String dataInicial, @RequestParam  String dataFinal){
 		return ResponseEntity.ok(service.findByDataBetween(
 				DateUtils.strToZonedDateTime(dataInicial),
 				DateUtils.strToZonedDateTime(dataFinal)).stream()
@@ -82,7 +83,7 @@ public class CorridaResource {
 	@GetMapping("/pista/{idPista}")
 	public ResponseEntity<List<CorridaDTO>> buscaPorPista(@PathVariable Pista idPista){
 		return ResponseEntity.ok(service.findByPista(idPista).stream()
-				.map((corrida) -> corrida.toDTO())
+				.map((Corrida::toDTO))
 				.toList()
 		);
 	}
@@ -90,7 +91,7 @@ public class CorridaResource {
 	@GetMapping("/campeonato/{campeonato}")
 	public ResponseEntity<List<CorridaDTO>> buscarPorEquipe(@PathVariable Campeonato campeonato){
 		return ResponseEntity.ok(service.findByCampeonato(campeonato).stream()
-				.map((corrida) -> corrida.toDTO())
+				.map(Corrida::toDTO)
 				.toList()
 		);
 	}

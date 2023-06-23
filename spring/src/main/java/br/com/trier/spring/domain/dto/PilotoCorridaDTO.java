@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PilotoDTO {
+public class PilotoCorridaDTO {
 	
 	private Integer id;
-	private String nome;
-	private Integer paisId;
-	private String paisNome;
-	private Integer equipeId;
-	private String equipeNome;
-	
+	private Integer pilotoId;
+	private String nomePiloto;
+	private Integer corridaId;
+	private Integer colocacao;
 }

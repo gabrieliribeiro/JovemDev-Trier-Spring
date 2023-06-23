@@ -1,6 +1,5 @@
 package br.com.trier.spring.repositories;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 
