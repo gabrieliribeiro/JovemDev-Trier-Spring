@@ -1,6 +1,7 @@
 package br.com.trier.spring.repositories;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,7 @@ import br.com.trier.spring.domain.Pista;
 
 @Repository
 public interface CorridaRepository extends JpaRepository<Corrida, Integer>{
-	List<Corrida> findByDataBetween(LocalDate dataInicial, LocalDate dataFinal);
+	List<Corrida> findByDataBetween(ZonedDateTime dataInicial, ZonedDateTime dataFinal);
 	List<Corrida> findByCampeonato(Campeonato campeonato);
 	List<Corrida> findByPista(Pista pista);
 }

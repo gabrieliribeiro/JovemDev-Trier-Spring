@@ -1,6 +1,7 @@
 package br.com.trier.spring.services;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import br.com.trier.spring.domain.Campeonato;
@@ -14,7 +15,8 @@ public interface CorridaService {
 	void delete (Integer id);
 	List<Corrida> listAll();
 	Corrida findById(Integer id);
-	List<Corrida> findByDataBetween(LocalDate dataInicial, LocalDate dataFinal);
+	List<Corrida> findByData(ZonedDateTime data);
+	List<Corrida> findByDataBetween(ZonedDateTime dataInicial, ZonedDateTime dataFinal);
 	List<Corrida> findByCampeonato(Campeonato campeonato);
 	List<Corrida> findByPista(Pista pista);
 }

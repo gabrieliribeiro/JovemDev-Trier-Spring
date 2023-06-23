@@ -9,7 +9,8 @@ import br.com.trier.spring.domain.Campeonato;
 
 @Repository
 public interface CampeonatoRepository extends JpaRepository<Campeonato, Integer>{
-	
+
+	List <Campeonato> findByDescricaoStartingWithIgnoreCase(String descricao);
 	List<Campeonato> findByAno(Integer ano);
 	List<Campeonato> findByAnoBetween(Integer anoInicial, Integer anoFinal);
 	List<Campeonato> findByDescricaoContainsIgnoreCase(String descricao);

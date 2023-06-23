@@ -1,6 +1,7 @@
 package br.com.trier.spring.services.impl;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class CorridaServiceImpl implements CorridaService{
 		}
 		if (corrida.getPista() == null) {
 			throw new ViolacaoIntegridade("Pista não pode ser nula");
+		}
+		if (corrida.getData().getYear() != corrida.getCampeonato().getAno()) {
+			throw new ViolacaoIntegridade("Data não pode diferir da data do campeonato");
 		}
 	}
 	
@@ -66,7 +70,12 @@ public class CorridaServiceImpl implements CorridaService{
 	}
 
 	@Override
-	public List<Corrida> findByDataBetween(LocalDate dataInicial, LocalDate dataFinal) {
+	public List<Corrida> findByData(ZonedDateTime data) {
+		return null;
+	}
+
+	@Override
+	public List<Corrida> findByDataBetween(ZonedDateTime dataInicial, ZonedDateTime dataFinal) {
 		List<Corrida> lista = repository.findByDataBetween(dataInicial, dataFinal);
 		if (lista.size() == 0) {
 			throw new ObjetoNaoEncontrado("Nenhuma corrida encontrada com as datas informadas");

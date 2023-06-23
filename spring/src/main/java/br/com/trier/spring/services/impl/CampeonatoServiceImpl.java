@@ -76,17 +76,29 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 
 	@Override
 	public List<Campeonato> findByAnoBetween(Integer anoInicial, Integer anoFinal) {
-		return repository.findByAnoBetween(anoInicial, anoFinal);
+		List<Campeonato> lista = repository.findByAnoBetween(anoInicial, anoFinal);
+		if (lista.size() == 0) {
+			throw new ObjetoNaoEncontrado("Campeonato não encontrado neste período");
+		}
+		return lista;
 	}
 
 	@Override
 	public List<Campeonato> findByDescricaoContainsIgnoreCase(String descricao) {
-		return repository.findByDescricaoContainsIgnoreCase(descricao);
+		List<Campeonato> lista = repository.findByDescricaoContainsIgnoreCase(descricao.substring(0));
+		if (lista.size() == 0) {
+			throw new ObjetoNaoEncontrado("Campeonato não encontrado com a descrição %s".formatted(descricao));
+		}
+		return lista;
 	}
 
 	@Override
 	public List<Campeonato> findByDescricaoContainsIgnoreCaseAndAnoEquals(String descricao, Integer ano) {
-		return repository.findByDescricaoContainsIgnoreCaseAndAnoEquals(descricao, ano);
+		List<Campeonato>  lista = repository.findByDescricaoContainsIgnoreCaseAndAnoEquals(descricao, ano);
+		if (lista.size() == 0){
+			throw  new ObjetoNaoEncontrado("Campeonato não encontrado com os dados %s e %s repassados!".formatted(descricao, ano));
+		}
+		return lista;
 	}
 	
 }

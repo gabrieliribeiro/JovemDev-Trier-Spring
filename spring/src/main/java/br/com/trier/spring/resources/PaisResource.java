@@ -53,11 +53,10 @@ public class PaisResource {
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
-	
+
 	@GetMapping("/name/{name}")
-	private ResponseEntity<List<Pais>> buscarPorNome(@PathVariable String name) {
-		List<Pais> lista = service.findByNameStartingWithIgnoreCase(name);
-		return lista.size()>0 ? ResponseEntity.ok(lista) : ResponseEntity.badRequest().build();
+	public ResponseEntity<List<Pais>> findByNameStartingWithIgnoreCase(@PathVariable String name){
+		return ResponseEntity.ok(service.findByNameStartingWithIgnoreCase(name));
 	}
 	
 	

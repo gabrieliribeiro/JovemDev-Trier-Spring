@@ -13,8 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CorridaDTO {
 	private Integer id;
-	private LocalDate data;
-	private Pista pista;
-	private Campeonato campeonato;
+	private String data;
+	private Integer pistaId;
+	private Integer campeonatoId;
+	private String campeonatoNome;
 	
 }

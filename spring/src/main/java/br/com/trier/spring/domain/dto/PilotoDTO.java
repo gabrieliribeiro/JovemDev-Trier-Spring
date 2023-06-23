@@ -13,7 +13,9 @@ public class PilotoDTO {
 	
 	private Integer id;
 	private String nome;
-	private Pais pais;
-	private Equipe equipe;
+	private Integer paisId;
+	private String paisNome;
+	private Integer equipeId;
+	private String equipeNome;
 	
 }

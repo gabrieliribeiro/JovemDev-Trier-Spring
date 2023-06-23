@@ -1,8 +1,10 @@
 package br.com.trier.spring.domain;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 import br.com.trier.spring.domain.dto.CorridaDTO;
+import br.com.trier.spring.utils.DateUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,7 +32,7 @@ public class Corrida {
 	private Integer id;
 	
 	@Column(name = "data_corrida")
-	private LocalDate data;
+	private ZonedDateTime data;
 	
 	@ManyToOne
 	@NotNull
@@ -39,13 +41,19 @@ public class Corrida {
 	@ManyToOne
 	@NotNull
 	private Campeonato campeonato;
-	
-	//Modificar DTO e criar Utils
+
 	public Corrida(CorridaDTO dto) {
-		this(dto.getId(), dto.getData(),dto.getPista(), dto.getCampeonato());
+		this(dto.getId(),
+				DateUtils.strToZonedDateTime(dto.getData()),
+				new Pista(dto.getPistaId(), null, null),
+				new Campeonato(dto.getCampeonatoId(), dto.getCampeonatoNome(), null));
 	}
-	
-	public CorridaDTO toDto() {
-		return new CorridaDTO(this.id, this.data, this.pista, this.campeonato);
+
+	public Corrida(CorridaDTO dto, Campeonato campeonato, Pista pista) {
+		this(dto.getId(), DateUtils.strToZonedDateTime(dto.getData()), pista, campeonato);
+	}
+
+	public CorridaDTO toDTO() {
+		return new CorridaDTO(id, DateUtils.zonedDateTimeToStr(data), pista.getId(), campeonato.getId(), campeonato.getDescricao());
 	}
 }

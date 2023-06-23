@@ -57,7 +57,11 @@ public class PaisServiceImpl implements PaisService{
 
 	@Override
 	public List<Pais> findByNameStartingWithIgnoreCase(String name) {
-		return repository.findByNameStartingWithIgnoreCase(name);
+		List<Pais> lista = repository.findByNameStartingWithIgnoreCase(name);
+		if (lista.size() == 0) {
+			throw new ObjetoNaoEncontrado("Não foi encontrado países com a letra %s".formatted(lista));
+		}
+		return lista;
 	}
 
 }

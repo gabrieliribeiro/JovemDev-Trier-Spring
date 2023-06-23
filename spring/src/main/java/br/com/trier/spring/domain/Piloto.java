@@ -34,12 +34,15 @@ public class Piloto {
 	
 	@ManyToOne
 	private Equipe equipe;
-	
+
 	public Piloto(PilotoDTO dto) {
-		this(dto.getId(), dto.getNome(), dto.getPais(), dto.getEquipe());
+		this(dto.getId(),
+				dto.getNome(),
+				new Pais(dto.getPaisId(), dto.getPaisNome()),
+				new Equipe(dto.getEquipeId(), dto.getEquipeNome()));
 	}
-	
-	public PilotoDTO toDto() {
-		return new PilotoDTO(this.id, this.nome, this.getPais(), this.equipe);
+
+	public PilotoDTO toDTO() {
+		return new PilotoDTO(id, nome, pais.getId(), pais.getName(), equipe.getId(), equipe.getNome());
 	}
 }
