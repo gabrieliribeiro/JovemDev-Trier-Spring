@@ -55,7 +55,7 @@ public class UserServiceTest extends BaseTests{
 	@Test
 	@DisplayName("Teste incluir usuário")
 	void insertUserTest() {
-		var user = new User(null, "nome", "email", "senha");
+		var user = new User(null, "nome", "email", "senha", "ADMIN,USER");
 		userService.salvar(user);
 		user = userService.findById(1);
 		assertNotEquals(user, null);
@@ -70,7 +70,7 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste alterar usuário")
 	@Sql(scripts = "classpath:sql/usuario.sql")
 	void updateUserTest() {
-		var user = new User(1, "altera", "altera", "altera");
+		var user = new User(1, "altera", "altera", "altera", "ADMIN,USER");
 		userService.update(user);
 		var alteredUser = userService.findById(1);
 		assertNotEquals(user, null);
@@ -104,7 +104,7 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Cadastro com email repetido")
 	@Sql(scripts = "classpath:sql/usuario.sql")
 	void insertNewUserWithDuplicateEmailTest() {
-		var user = new User(null, "Gabrieli", "teste1@teste.com", "1234");
+		var user = new User(null, "Gabrieli", "teste1@teste.com", "1234", "ADMIN,USER");
 		var exception = assertThrows(ViolacaoIntegridade.class, ()-> userService.salvar(user));
 		assertEquals("E-mail já cadastrado: teste1@teste.com", exception.getMessage());
 	}
@@ -113,7 +113,7 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Alterar usuário inexistente")
 	@Sql(scripts = "classpath:sql/usuario.sql")
 	void updateNonexistentUser() {
-		var user = new User(5, "Gabrieli", "teste5@teste.com", "1234");
+		var user = new User(5, "Gabrieli", "teste5@teste.com", "1234", "ADMIN,USER");
 		var exception = assertThrows(ObjetoNaoEncontrado.class,	() -> userService.findById(5));
 		assertEquals("Usuário 5 não encontrado", exception.getMessage());
 	}
