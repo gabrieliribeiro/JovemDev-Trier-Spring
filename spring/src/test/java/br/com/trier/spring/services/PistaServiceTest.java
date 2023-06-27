@@ -67,7 +67,7 @@ public class PistaServiceTest extends BaseTests{
 	}
 	
 	@Test
-	@DisplayName("Teste alterar usuário")
+	@DisplayName("Teste alterar pista")
 	@Sql(scripts = "classpath:sql/pais.sql")
 	@Sql(scripts = "classpath:sql/pista.sql")
 	void updateUserTest() {
@@ -80,7 +80,7 @@ public class PistaServiceTest extends BaseTests{
 	}
 	
 	@Test
-	@DisplayName("Alterar usuário inexistente")
+	@DisplayName("Alterar pista inexistente")
 	@Sql(scripts = "classpath:sql/pais.sql")
 	@Sql(scripts = "classpath:sql/pista.sql")
 	void updateNonexistentUser() {
@@ -90,7 +90,7 @@ public class PistaServiceTest extends BaseTests{
 	}
 	
 	@Test
-	@DisplayName("Teste deleta usuário")
+	@DisplayName("Teste deleta pista")
 	@Sql(scripts = "classpath:sql/pais.sql")
 	@Sql(scripts = "classpath:sql/pista.sql")
 	void deleteUserTest() {
