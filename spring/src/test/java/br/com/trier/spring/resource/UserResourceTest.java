@@ -48,31 +48,11 @@ public class UserResourceTest {
 
     @Autowired
     protected TestRestTemplate rest;
-    
-    @Autowired
-    private MockMvc mockMvc;
-
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    private HttpHeaders headers;
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    protected UserRepository repository;
 
     User user;
 
     private ResponseEntity<UserDTO> getUser(String url) {
         return rest.getForEntity(url, UserDTO.class);
-    }
-    
-    @BeforeEach
-    public void setup() {
-        headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-
-        passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @SuppressWarnings("unused")
@@ -141,30 +121,30 @@ public class UserResourceTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1, user.getId());
     }
-    
-    
+
+
     @Test
-    private String getAuthToken() throws Exception {
-        // Criação de um usuário de teste no banco de dados H2
-    	LoginDTO loginDTO = new LoginDTO("email", passwordEncoder.encode("senha"));
-        entityManager.persist(loginDTO);
+    @DisplayName("teste obter token")
+    @Sql(scripts = "classpath:sql/limpa_tabelas.sql")
+    public String geraToken() {
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail("test1@test.com.br");
+        loginDTO.setPassword("123");
 
-        // Realiza uma solicitação de autenticação para obter o token
-        String url = "/authenticate";
-        String requestBody = "{\"username\":\"test_user\",\"password\":\"test_password\"}";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(url)
-                .headers(headers)
-                .content(requestBody))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
+        HttpEntity<LoginDTO> requestEntity = new HttpEntity<>(loginDTO, headers);
 
-        MockHttpServletResponse response = mvcResult.getResponse();
-        String token = response.getHeader("Authorization").replace("Bearer ", "");
+        ResponseEntity<String> responseEntity = rest.exchange("/auth/token",
+                HttpMethod.POST,
+                requestEntity,
+                String.class);
 
+        String token = responseEntity.getBody();
         return token;
-    }
 
+    }
     @Test
     @DisplayName("Cadastrar usuário")
     @Sql(scripts = "classpath:sql/limpa_tabelas.sql")
