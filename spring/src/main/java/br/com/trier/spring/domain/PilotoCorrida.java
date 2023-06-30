@@ -1,6 +1,7 @@
 package br.com.trier.spring.domain;
 
 import br.com.trier.spring.domain.dto.PilotoCorridaDTO;
+import br.com.trier.spring.utils.DateUtils;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,27 +17,32 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of ="id")
+@EqualsAndHashCode(of = "id")
 @Entity(name = "piloto_corrida")
 public class PilotoCorrida {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_piloto_corrida")
+	@Column
 	@Setter
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
 	@ManyToOne
 	private Piloto piloto;
-
 	@ManyToOne
 	private Corrida corrida;
-	
-	@Column(name = "colocacao")
+	@Column
 	private Integer colocacao;
 	
-	/*
-	 * public PilotoCorrida(PilotoCorridaDTO dto, Piloto piloto, Corrida corrida) {
-	 * this(dto.getId(), piloto(dto.getPilotoId()), corrida() ); }
-	 */
+	public PilotoCorridaDTO toDTO() {
+		return new PilotoCorridaDTO(id, 
+									piloto.getId(), 
+									piloto.getNome(), 
+									corrida.getId(), 
+									DateUtils.zonedDateTimeToStr(corrida.getData()), 
+									colocacao);
+	}
+	
+	public PilotoCorrida(PilotoCorridaDTO dto, Piloto piloto, Corrida corrida) {
+		this(dto.getId(), piloto, corrida, dto.getColocacao());
+	}
 }
