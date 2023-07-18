@@ -18,10 +18,10 @@ public class UserServiceImpl implements UserService{
 	@Autowired
     UserRepository repository;
 	
-	private void findByEmail(User obj) {
-		Optional<User> user = repository.findByEmail(obj.getEmail());
-		if (user != null && user.get().getId() != obj.getId()) {
-			throw new ViolacaoIntegridade("E-mail já cadastrado: %s".formatted(obj.getEmail()));
+	private void findByEmail(User user) {
+		User busca = repository.findByEmail(user.getEmail()).orElse(null);
+		if (busca!=null && busca.getId().equals(user.getId())) {
+			throw new ViolacaoIntegridade("E-mail já cadastrado: %s".formatted(user.getEmail()));
 		}
 	}
 	
