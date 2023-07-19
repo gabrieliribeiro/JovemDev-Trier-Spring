@@ -80,4 +80,10 @@ public class PistaServiceImpl implements PistaService {
 		}
 		return lista;
 	}
+
+
+	@Override
+	public List<Pista> findByName(String name) {
+		return repository.findByName(name);
+	}
 }

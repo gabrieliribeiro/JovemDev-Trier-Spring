@@ -10,6 +10,7 @@ import br.com.trier.spring.domain.Pista;
 
 @Repository
 public interface PistaRepository extends JpaRepository<Pista, Integer> {
+	List<Pista> findByName(String name);
 	List<Pista> findByTamanhoBetween(Integer tamanhoInicial, Integer tamanhoFinal);
 	List<Pista> findByPaisOrderByTamanhoDesc(Pais pais);
 }

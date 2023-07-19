@@ -12,6 +12,7 @@ public interface PistaService {
 	void delete (Integer id);
 	List<Pista> listAll();
 	Pista findById(Integer id);
+	List<Pista> findByName(String name);
 	List<Pista> findByTamanhoBetween(Integer tamanhoInicial, Integer tamanhoFinal);
 	List<Pista> findByPaisOrderByTamanhoDesc(Pais pais);
 }

@@ -59,7 +59,7 @@ public class PistaServiceTest extends BaseTests{
 	@DisplayName("Teste de incluir uma pista")
 	@Sql(scripts = "classpath:sql/pais.sql")
 	void insertNewSpeedwayTest() {
-		var pista = new Pista(null, 2000, paisService.findById(2));
+		var pista = new Pista(null, "Interlagos", 2000, paisService.findById(2));
 		pistaService.salvar(pista);
 		pista = pistaService.findById(1);
 		assertNotEquals(pista, null);
@@ -71,7 +71,7 @@ public class PistaServiceTest extends BaseTests{
 	@Sql(scripts = "classpath:sql/pais.sql")
 	@Sql(scripts = "classpath:sql/pista.sql")
 	void updateUserTest() {
-		var pista = new Pista(1, 2500, paisService.findById(2));
+		var pista = new Pista(1, "Interlagos", 2500, paisService.findById(2));
 		pistaService.update(pista);
 		var alteredUser = pistaService.findById(1);
 		assertNotEquals(pista, null);
@@ -84,7 +84,7 @@ public class PistaServiceTest extends BaseTests{
 	@Sql(scripts = "classpath:sql/pais.sql")
 	@Sql(scripts = "classpath:sql/pista.sql")
 	void updateNonexistentUser() {
-		var pista = new Pista(5, 2500, null);
+		var pista = new Pista(5,"Interlagos", 2500, null);
 		var exception = assertThrows(ObjetoNaoEncontrado.class,	() -> pistaService.findById(5));
 		assertEquals("Pista id 5 não existe", exception.getMessage());
 	}

@@ -45,7 +45,7 @@ public class Corrida {
 	public Corrida(CorridaDTO dto) {
 		this(dto.getId(),
 				DateUtils.strToZonedDateTime(dto.getData()),
-				new Pista(dto.getPistaId(), null, null),
+				new Pista(dto.getPistaId(), null, null, null),
 				new Campeonato(dto.getCampeonatoId(), dto.getCampeonatoNome(), null));
 	}
 
