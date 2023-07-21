@@ -36,7 +36,6 @@ public class PilotoServiceImpl implements PilotoService{
 	
 	@Override
 	public Piloto salvar(Piloto piloto) {
-		validaPiloto(piloto);
 		return repository.save(piloto);
 	}
 

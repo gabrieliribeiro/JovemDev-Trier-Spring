@@ -19,27 +19,28 @@ import lombok.Setter;
 @EqualsAndHashCode(of ="id")
 @Entity(name = "piloto")
 public class Piloto {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_piloto")
 	@Setter
 	private Integer id;
-	
+
 	@Column(name = "nome_piloto")
 	private String nome;
-	
+
 	@ManyToOne
 	private Pais pais;
-	
+
 	@ManyToOne
 	private Equipe equipe;
 
 	public Piloto(PilotoDTO dto) {
-		this(dto.getId(),
-				dto.getNome(),
-				new Pais(dto.getPaisId(), dto.getPaisNome()),
-				new Equipe(dto.getEquipeId(), dto.getEquipeNome()));
+		this(dto.getId(), dto.getNome(), new Pais(dto.getPaisId(), null), new Equipe(dto.getEquipeId(), null));
+	}
+
+	public Piloto(PilotoDTO dto, Pais pais, Equipe equipe) {
+		this(dto.getId(), dto.getNome(), pais, equipe);
 	}
 
 	public PilotoDTO toDTO() {
